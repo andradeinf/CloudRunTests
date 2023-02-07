@@ -3,3 +3,5 @@ steps:
     args: ['build', '-t', 'gcr.io/cloudruntests-377116/cloud-run-tests:$SHORT_SHA', '.']
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/cloudruntests-377116/cloud-run-tests:$SHORT_SHA']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['beta', 'run', 'deploy', 'cloud-run-tests', '--region=europe-west1', '--platform=managed', '--image=gcr.io/cloudruntests-377116/cloud-run-tests:$SHORT_SHA']
