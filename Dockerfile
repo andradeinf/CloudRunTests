@@ -2,6 +2,9 @@ FROM node:16-slim
 
 WORKDIR /app
 
-ADD . /app
+COPY package*.json ./
+RUN npm ci --only=production
 
-CMD node server.js
+COPY server.js ./
+
+CMD ["npm", "run", "start"]
