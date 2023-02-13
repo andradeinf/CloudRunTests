@@ -9,7 +9,7 @@ const clientSecret = process.env.GITHUB_CLIENT_SECRET;
 const cookieSecret = process.env.COOKIE_SECRET;
 
 const PORT = process.env.PORT | 8080;
-let clientUrlHostname = 'https://cloud-run-tests/andrade.inf.br';
+let clientUrlHostname = 'https://cloud-run-tests.andrade.inf.br';
 if (process.env.WEB_HOST) {
   clientUrlHostname = `https://${PORT}-${process.env.WEB_HOST}`;
 }
