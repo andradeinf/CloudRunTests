@@ -8,6 +8,12 @@ const clientId = process.env.GITHUB_CLIENT_ID;
 const clientSecret = process.env.GITHUB_CLIENT_SECRET;
 const cookieSecret = process.env.COOKIE_SECRET;
 
+const PORT = process.env.PORT | 8080;
+let clientUrlHostname = 'https://cloud-run-tests/andrade.inf.br';
+if (process.env.WEB_HOST) {
+  clientUrlHostname = `https://${PORT}-${process.env.WEB_HOST}`;
+}
+
 app.use(cookieSession({
     secret: cookieSecret
 }));
@@ -17,7 +23,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/login/github', (req, res) => {
-    const url = `https://github.com/login/oauth/authorize?client_id=${clientId}&client_url=https://cloud-run-tests.andrade.inf.br/login/github/callback`;
+    const url = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${clientUrlHostname}/login/github/callback`;
     res.redirect(url);
 })
 
@@ -76,5 +82,5 @@ app.get('/logout', async (req, res) => {
     res.redirect('/');
 });
 
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => console.log('Listening...'));
+app.listen(PORT, () => console.log(`Listening... ${clientUrlHostname}`));
+
